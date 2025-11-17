@@ -1,3 +1,4 @@
+## Se usó la ayuda del LLM Gemini (atraves de muchos promts) para la elaboración de este trabajo.
 # Trabajo Práctico: Primer Final - Sistema de Reservas de Mesas
 
 * **Materia:** Electiva: Programación Web - Frontend
