@@ -1,0 +1,25 @@
+.filtros-form {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 10px;
+  align-items: center;
+}
+
+.filtros-form mat-form-field {
+  flex-grow: 1;
+  min-width: 200px; 
+}
+
+.filtro-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 8px; 
+}
+
+hr {
+  margin: 20px 0;
+}
+
+:host ::ng-deep mat-list-item {
+  height: 133px;
+}

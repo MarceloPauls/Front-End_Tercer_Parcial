@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Configuración de Horarios</mat-card-title>
+    <mat-card-subtitle>Asignar horarios de reserva disponibles a una zona</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    
+    <fieldset [formGroup]="formSeleccion" class="admin-form">
+      <legend>Seleccionar Zona</legend>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>1. Seleccionar Restaurante</mat-label>
+        <mat-select formControlName="idRestaurante">
+          <mat-option *ngFor="let rest of restaurantes" [value]="rest.id">
+            {{ rest.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>2. Seleccionar Zona</mat-label>
+        <mat-select formControlName="idZona" [disabled]="!formSeleccion.value.idRestaurante">
+          <mat-option *ngFor="let zona of zonasDelRestaurante" [value]="zona.id">
+            {{ zona.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    </fieldset>
+
+    <div *ngIf="zonaSeleccionada">
+      <hr>
+      
+      <h3>Agregar Horario a esta Zona</h3>
+      <form [formGroup]="formAgregarHorario" (ngSubmit)="agregarHorario()" class="admin-form">
+        
+        <mat-form-field appearance="fill">
+          <mat-label>Nuevo Horario (HH:MM)</mat-label>
+          <input matInput formControlName="horario" placeholder="Ej: 20:30">
+          <mat-error *ngIf="formAgregarHorario.get('horario')?.hasError('pattern')">
+            Formato inválido. Use HH:MM (ej. 14:00).
+          </mat-error>
+        </mat-form-field>
+        
+        <button mat-flat-button color="primary" type="submit" [disabled]="!formAgregarHorario.valid">
+          <mat-icon>add</mat-icon> Agregar Horario
+        </button>
+      </form>
+      
+      <hr>
+
+      <h3>Horarios Disponibles Actuales</h3>
+      <div *ngIf="horariosDeLaZona.length === 0; else listaHorarios">
+        <p>No hay horarios configurados para esta zona.</p>
+      </div>
+
+      <ng-template #listaHorarios>
+        <mat-chip-list aria-label="Horarios disponibles">
+          <mat-chip *ngFor="let horario of horariosDeLaZona" (removed)="borrarHorario(horario)" [removable]="true">
+            {{horario}}
+            <button matChipRemove aria-label="Quitar horario">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+        </mat-chip-list>
+      </ng-template>
+      
+    </div> </mat-card-content>
+</mat-card>

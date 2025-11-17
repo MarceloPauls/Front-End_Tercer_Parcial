@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Administración de Restaurantes</mat-card-title>
+    <mat-card-subtitle>Crear, ver y eliminar restaurantes</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    
+    <form [formGroup]="formRestaurante" (ngSubmit)="agregarRestaurante()" class="admin-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre del Restaurante</mat-label>
+        <input matInput formControlName="nombre" placeholder="Ej: La Pérgola">
+      </mat-form-field>
+      
+      <button mat-flat-button color="primary" type="submit" [disabled]="!formRestaurante.valid">
+        <mat-icon>add</mat-icon> Agregar Restaurante
+      </button>
+    </form>
+    
+    <hr>
+    
+    <h3>Restaurantes Actuales</h3>
+    
+    <div *ngIf="restaurantes.length === 0; else lista">
+      <p>No hay restaurantes cargados.</p>
+    </div>
+    
+    <ng-template #lista>
+      <mat-list role="list">
+        <mat-list-item *ngFor="let rest of restaurantes" role="listitem">
+          
+          <span matListItemTitle>{{ rest.nombre }}</span>
+          <span matListItemLine>ID: {{ rest.id }}</span>
+          
+          <button mat-icon-button color="warn" (click)="borrarRestaurante(rest.id)" aria-label="Eliminar restaurante">
+            <mat-icon>delete</mat-icon>
+          </button>
+          
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+    
+  </mat-card-content>
+</mat-card>

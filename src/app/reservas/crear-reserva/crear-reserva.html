@@ -1,0 +1,74 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Crear Nueva Reserva</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <form [formGroup]="formReserva" (ngSubmit)="confirmarReserva()" class="reserva-form">
+      
+      <h3>Detalles de la Reserva</h3>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>1. Restaurante</mat-label>
+        <mat-select formControlName="restaurante">
+          <mat-option *ngFor="let rest of restaurantes" [value]="rest.id">
+            {{ rest.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>2. Zona</mat-label>
+        <mat-select formControlName="zona" [disabled]="!formReserva.get('restaurante')?.value">
+          <mat-option *ngFor="let zona of zonasDelRestaurante" [value]="zona.id">
+            {{ zona.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>3. Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>4. Hora</mat-label>
+        <mat-select formControlName="hora" [disabled]="!formReserva.get('zona')?.value">
+          <mat-option *ngFor="let hora of horariosDeLaZona" [value]="hora">
+            {{ hora }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>5. Cantidad de Personas</mat-label>
+        <input matInput type="number" formControlName="cantidadPersonas" min="1">
+      </mat-form-field>
+
+      <hr>
+      <h3>Datos del Cliente</h3>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre">
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="apellido">
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono" placeholder="Ej: 0981 123456">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="!formReserva.valid" class="submit-button">
+        Confirmar Reserva
+      </button>
+      
+    </form>
+  </mat-card-content>
+</mat-card>

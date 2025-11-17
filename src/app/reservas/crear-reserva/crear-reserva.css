@@ -1,0 +1,18 @@
+.reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+hr {
+  margin: 16px 0;
+}
+
+.submit-button {
+  padding: 10px 0;
+  font-size: 1.1em;
+}

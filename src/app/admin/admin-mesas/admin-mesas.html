@@ -1,0 +1,75 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Administración de Mesas</mat-card-title>
+    <mat-card-subtitle>Crear y eliminar mesas de una zona</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    
+    <fieldset [formGroup]="formSeleccion" class="admin-form">
+      <legend>Seleccionar Ubicación</legend>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>1. Seleccionar Restaurante</mat-label>
+        <mat-select formControlName="idRestaurante">
+          <mat-option *ngFor="let rest of restaurantes" [value]="rest.id">
+            {{ rest.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>2. Seleccionar Zona</mat-label>
+        <mat-select formControlName="idZona" [disabled]="!formSeleccion.value.idRestaurante">
+          <mat-option *ngFor="let zona of zonasDelRestaurante" [value]="zona.id">
+            {{ zona.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    </fieldset>
+
+    <div *ngIf="zonaSeleccionada">
+      <hr>
+      
+      <h3>Agregar Nueva Mesa a esta Zona</h3>
+      <form [formGroup]="formAgregarMesa" (ngSubmit)="agregarMesa()" class="admin-form">
+        
+        <mat-form-field appearance="fill">
+          <mat-label>Número de Mesa</mat-label>
+          <input matInput formControlName="numero" type="number" placeholder="Ej: 5">
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill">
+          <mat-label>Capacidad (personas)</mat-label>
+          <input matInput formControlName="capacidad" type="number" placeholder="Ej: 4">
+        </mat-form-field>
+        
+        <button mat-flat-button color="primary" type="submit" [disabled]="!formAgregarMesa.valid">
+          <mat-icon>add</mat-icon> Agregar Mesa
+        </button>
+      </form>
+      
+      <hr>
+
+      <h3>Mesas en esta Zona</h3>
+      <div *ngIf="mesasDeLaZona.length === 0; else listaMesas">
+        <p>No hay mesas cargadas en esta zona.</p>
+      </div>
+
+      <ng-template #listaMesas>
+        <mat-list role="list">
+          <mat-list-item *ngFor="let mesa of mesasDeLaZona" role="listitem">
+            <span matListItemTitle>Mesa N° {{ mesa.numero }}</span>
+            <span matListItemLine>Capacidad: {{ mesa.capacidad }} personas | ID: {{ mesa.id }}</span>
+            
+            <button mat-icon-button color="warn" (click)="borrarMesa(mesa.id)" aria-label="Eliminar mesa">
+              <mat-icon>delete</mat-icon>
+            </button>
+            
+          </mat-list-item>
+        </mat-list>
+      </ng-template>
+      
+    </div> </mat-card-content>
+</mat-card>

@@ -1,0 +1,79 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Listado de Reservas</mat-card-title>
+    <mat-card-subtitle>Filtrar y ver reservas existentes</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    
+    <form [formGroup]="formFiltros" (ngSubmit)="aplicarFiltros()" class="filtros-form">
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrar por Restaurante</mat-label>
+        <mat-select formControlName="restaurante">
+          <mat-option *ngFor="let rest of restaurantes" [value]="rest.id">
+            {{ rest.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrar por Zona</mat-label>
+        <mat-select formControlName="zona" [disabled]="!formFiltros.get('restaurante')?.value">
+          <mat-option *ngFor="let zona of zonasDelRestaurante" [value]="zona.id">
+            {{ zona.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrar por Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="filtro-actions">
+        <button mat-flat-button color="primary" type="submit">
+          <mat-icon>search</mat-icon> Aplicar Filtros
+        </button>
+        <button mat-button type="button" (click)="limpiarFiltros()">
+          <mat-icon>clear</mat-icon> Limpiar
+        </button>
+      </div>
+      
+    </form>
+    
+    <hr>
+
+    <h3>Resultados</h3>
+    <div *ngIf="reservasMostradas.length === 0; else listaReservas">
+      <p>No se encontraron reservas con esos filtros.</p>
+    </div>
+
+    <ng-template #listaReservas>
+      <mat-list role="list">
+        <mat-list-item *ngFor="let r of reservasMostradas" role="listitem" class="reserva-item">
+          
+          <mat-icon matListItemIcon>restaurant</mat-icon>
+          
+          <span matListItemTitle>
+            {{r.nombreCliente}} {{r.apellidoCliente}} - ({{r.cantidadPersonas}} personas)
+          </span>
+          <span matListItemLine>
+            <strong>Fecha:</strong> {{r.fecha}} | <strong>Hora:</strong> {{r.hora}} | <strong>Tel:</strong> {{r.telefonoCliente}}
+          </span>
+          <span matListItemLine>
+            <strong>Ubicación:</strong> {{r.nombreRestaurante}} > {{r.nombreZona}} > Mesa N° {{r.numeroMesa}}
+          </span>
+          
+          <button mat-icon-button color="warn" (click)="borrarReserva(r.id)" aria-label="Eliminar reserva">
+            <mat-icon>delete</mat-icon>
+          </button>
+          
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+
+  </mat-card-content>
+</mat-card>

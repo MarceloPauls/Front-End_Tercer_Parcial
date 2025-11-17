@@ -1,0 +1,64 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Administración de Zonas</mat-card-title>
+    <mat-card-subtitle>Crear y eliminar zonas de un restaurante</mat-card-subtitle>
+  </mat-card-header>
+  
+  <mat-card-content>
+    
+    <h3>Agregar Nueva Zona</h3>
+    <form [formGroup]="formZona" (ngSubmit)="agregarZona()" class="admin-form">
+      
+      <mat-form-field appearance="fill">
+        <mat-label>1. Restaurante al que pertenece</mat-label>
+        <mat-select formControlName="idRestaurante">
+          <mat-option *ngFor="let rest of restaurantes" [value]="rest.id">
+            {{ rest.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>2. Nombre de la Zona</mat-label>
+        <input matInput formControlName="nombre" placeholder="Ej: Terraza">
+      </mat-form-field>
+      
+      <button mat-flat-button color="primary" type="submit" [disabled]="!formZona.valid">
+        <mat-icon>add</mat-icon> Agregar Zona
+      </button>
+    </form>
+    
+    <hr>
+    
+    <h3>Ver Zonas Existentes</h3>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Selecciona un Restaurante para ver sus zonas</mat-label>
+      <mat-select (selectionChange)="filtrarZonas($event.value)">
+        <mat-option *ngFor="let rest of restaurantes" [value]="rest.id">
+          {{ rest.nombre }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="zonasFiltradas.length === 0; else listaZonas">
+      <p>Selecciona un restaurante o no hay zonas para mostrar.</p>
+    </div>
+    
+    <ng-template #listaZonas>
+      <mat-list role="list">
+        <mat-list-item *ngFor="let zona of zonasFiltradas" role="listitem">
+          
+          <span matListItemTitle>{{ zona.nombre }}</span>
+          <span matListItemLine>ID: {{ zona.id }}</span>
+          
+          <button mat-icon-button color="warn" (click)="borrarZona(zona.id)" aria-label="Eliminar zona">
+            <mat-icon>delete</mat-icon>
+          </button>
+          
+        </mat-list-item>
+      </mat-list>
+    </ng-template>
+    
+  </mat-card-content>
+</mat-card>

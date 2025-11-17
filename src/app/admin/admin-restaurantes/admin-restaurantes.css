@@ -1,0 +1,14 @@
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+hr {
+  margin: 20px 0;
+}

@@ -1,0 +1,27 @@
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+hr {
+  margin: 20px 0;
+}
+
+/* Opcional: para el fieldset */
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+legend {
+  font-weight: bold;
+  padding: 0 8px;
+}
