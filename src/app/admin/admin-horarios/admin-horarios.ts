@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
 import { StorageService } from '../../core/services/storage.service';
 import { Restaurante } from '../../core/models/restaurante.model';
 import { Zona } from '../../core/models/zona.model';
@@ -12,7 +13,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { MatChipsModule } from '@angular/material/chips'; 
+
+
 
 @Component({
   selector: 'app-admin-horarios',

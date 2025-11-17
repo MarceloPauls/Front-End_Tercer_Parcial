@@ -56,14 +56,14 @@
       </div>
 
       <ng-template #listaHorarios>
-        <mat-chip-list aria-label="Horarios disponibles">
+        <mat-chip-set aria-label="Horarios disponibles">
           <mat-chip *ngFor="let horario of horariosDeLaZona" (removed)="borrarHorario(horario)" [removable]="true">
             {{horario}}
             <button matChipRemove aria-label="Quitar horario">
               <mat-icon>cancel</mat-icon>
             </button>
           </mat-chip>
-        </mat-chip-list>
+        </mat-chip-set>
       </ng-template>
       
     </div> </mat-card-content>
